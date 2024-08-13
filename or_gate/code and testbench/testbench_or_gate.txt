@@ -1,0 +1,34 @@
+module tb_or_gate;
+
+    // Declare testbench signals
+    reg a;
+    reg b;
+    wire c;
+
+    // Instantiate the or_gate module
+    or_gate uut (
+        .a(a),
+        .b(b),
+        .c(c)  // Connect the output 'c' of the or_gate module
+    );
+
+    // Initial block to provide stimulus and monitor the output
+    initial begin
+        // Open a VCD file for dumping waveforms
+        $dumpfile("dump.vcd");   // Specify the VCD file name
+        $dumpvars(0, tb_or_gate); // Dump all variables in the testbench module
+
+        // Monitor changes in signals
+        $monitor("Time: %0t | a=%b b=%b c=%b", $time, a, b, c);
+
+        // Apply test cases
+        a = 0; b = 0; #10; // Test case 1
+        a = 0; b = 1; #10; // Test case 2
+        a = 1; b = 0; #10; // Test case 3
+        a = 1; b = 1; #10; // Test case 4
+
+        // Finish simulation
+        $finish;
+    end
+
+endmodule
